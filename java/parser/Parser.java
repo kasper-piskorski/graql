@@ -34,6 +34,7 @@ import graql.lang.query.GraqlDelete;
 import graql.lang.query.GraqlGet;
 import graql.lang.query.GraqlInsert;
 import graql.lang.query.GraqlQuery;
+import graql.lang.query.GraqlStat;
 import graql.lang.query.GraqlUndefine;
 import graql.lang.query.MatchClause;
 import graql.lang.query.builder.Computable;
@@ -202,6 +203,9 @@ public class Parser extends GraqlBaseVisitor {
         } else if (ctx.query_compute() != null) {
             return visitQuery_compute(ctx.query_compute());
 
+        } else if (ctx.query_stat() != null) {
+            return visitQuery_stat(ctx.query_stat());
+
         } else {
             throw new IllegalArgumentException("Unrecognised Graql Query: " + ctx.getText());
         }
@@ -329,6 +333,15 @@ public class Parser extends GraqlBaseVisitor {
         return ctx.VAR_().stream()
                 .map(this::getVar)
                 .collect(Collectors.toCollection(LinkedHashSet::new));
+    }
+
+    @Override
+    public GraqlStat visitQuery_stat(GraqlParser.Query_statContext ctx) {
+        GraqlStat stat = Graql.stat();
+
+        return ctx.stat_scope() != null?
+                new GraqlStat(visitType_labels(ctx.stat_scope().type_labels())) :
+                null;
     }
 
     // COMPUTE QUERY ===========================================================

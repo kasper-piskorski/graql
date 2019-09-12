@@ -27,6 +27,7 @@ import graql.lang.query.GraqlCompute;
 import graql.lang.query.GraqlDefine;
 import graql.lang.query.GraqlInsert;
 import graql.lang.query.GraqlQuery;
+import graql.lang.query.GraqlStat;
 import graql.lang.query.GraqlUndefine;
 import graql.lang.query.MatchClause;
 import graql.lang.statement.Statement;
@@ -150,6 +151,11 @@ public class Graql {
     @CheckReturnValue
     public static GraqlCompute.Builder compute() {
         return new GraqlCompute.Builder();
+    }
+
+    @CheckReturnValue
+    public static GraqlStat stat() {
+        return new GraqlStat();
     }
 
     // Pattern Builder Methods

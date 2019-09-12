@@ -32,7 +32,7 @@ query               :   query_define    |   query_undefine                      
                     |   query_insert    |   query_delete                        // insert / delete data from graph
                     |   query_get       |   query_get_aggregate                 // read data from graph (OLTP)
                     |   query_get_group |   query_get_group_agg
-                    |   query_compute   ;                                       // compute analytics over graph (OLAP)
+                    |   query_compute   |   query_stat;                                       // compute analytics over graph (OLAP)
 
 query_define        :   DEFINE      statement_type+ ;
 query_undefine      :   UNDEFINE    statement_type+ ;
@@ -44,6 +44,9 @@ query_delete        :   MATCH       pattern+    DELETE  variables   filters  ;  
 query_get           :   MATCH       pattern+    GET     variables   filters  ;  // GET QUERY followed by group fn, and
                                                                                 // optionally, an aggregate fn
 query_compute       :   COMPUTE     compute_conditions  ;
+
+query_stat          :   STAT        stat_scope          ;
+stat_scope          :   IN          type_labels         ;
 
 // GET QUERY ANSWER GROUP AND AGGREGATE FUNCTIONS ==============================
 
@@ -190,7 +193,9 @@ input_path          :   compute_scope | compute_direction   ;
 compute_direction   :   FROM    ID_                                             // an instance to start the compute from
                     |   TO      ID_                 ;                           // an instance to end the compute at
 compute_target      :   OF      type_labels         ;                           // type(s) of instances to apply compute
+
 compute_scope       :   IN      type_labels         ;                           // type(s) to scope compute visibility
+
 compute_config      :   USING   compute_algorithm                               // algorithm to determine how to compute
                     |   WHERE   compute_args        ;                           // additional args for compute method
 
@@ -239,6 +244,7 @@ MATCH           : 'match'       ;   GET             : 'get'         ;
 DEFINE          : 'define'      ;   UNDEFINE        : 'undefine'    ;
 INSERT          : 'insert'      ;   DELETE          : 'delete'      ;
 AGGREGATE       : 'aggregate'   ;   COMPUTE         : 'compute'     ;
+STAT            : 'stat'        ;
 
 // NATIVE TYPE KEYWORDS
 
