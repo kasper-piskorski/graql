@@ -46,7 +46,7 @@ query_get           :   MATCH       pattern+    GET     variables   filters  ;  
 query_compute       :   COMPUTE     compute_conditions  ;
 
 query_stat          :   STAT        stat_scope          ;
-stat_scope          :   IN          type_labels         ;
+stat_scope          :   IN          type_labels     ';' ;
 
 // GET QUERY ANSWER GROUP AND AGGREGATE FUNCTIONS ==============================
 

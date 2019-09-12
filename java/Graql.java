@@ -558,7 +558,8 @@ public class Graql {
             DELETE("delete"),
             GET("get"),
             AGGREGATE("aggregate"),
-            GROUP("group");
+            GROUP("group"),
+            STAT("stat");
 
             private final String command;
 

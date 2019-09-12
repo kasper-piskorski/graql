@@ -17,6 +17,7 @@
  */
 package graql.lang.query;
 
+import graql.lang.Graql;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -43,6 +44,12 @@ public class GraqlStat extends GraqlQuery {
 
     @Override
     public String toString() {
-        return null;
+        StringBuilder query = new StringBuilder();
+
+        query.append(Graql.Token.Command.STAT).append(Graql.Token.Char.SPACE).append(labels);
+        query.append(Graql.Token.Char.SPACE);
+        query.append(Graql.Token.Char.SEMICOLON);
+
+        return query.toString();
     }
 }

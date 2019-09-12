@@ -123,6 +123,14 @@ public abstract class GraqlQuery {
         }
     }
 
+    public GraqlStat asStat() {
+        if (this instanceof GraqlStat) {
+            return (GraqlStat) this;
+        } else {
+            throw GraqlException.create("This is not a GraqlStat query");
+        }
+    }
+
     @Override
     public abstract String toString();
 }
